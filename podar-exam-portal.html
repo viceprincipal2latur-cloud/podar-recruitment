@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podar International School - Online Examination</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #7B2D8E;
+            --primary-dark: #5a1f68;
+            --secondary: #0066B2;
+            --accent: #d4af37;
+            --accent-light: #f4e4b8;
+            --bg: #faf8f5;
+            --surface: #ffffff;
+            --text: #2c2c2c;
+            --text-light: #666666;
+            --border: #e0ddd6;
+            --success: #2d7a4f;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 3px solid var(--primary);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        .school-info h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .school-info p {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .timer-display {
+            background: var(--accent-light);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.25rem;
+            border: 2px solid var(--accent);
+        }
+
+        .timer-display.warning {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: var(--danger);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Login Page */
+        .login-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px solid var(--border);
+        }
+
+        .login-card h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-card p {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 45, 142, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #004d8a;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #1f5a37;
+        }
+
+        /* Exam Page */
+        .exam-header {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .candidate-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .section-container {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .section-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+        }
+
+        .section-badge {
+            background: var(--accent);
+            color: var(--primary-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .question-card {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+        }
+
+        .question-number {
+            background: var(--accent-light);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.125rem;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: #e8f5e9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Results Page */
+        .results-card {
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px solid var(--border);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-header h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-summary {
+            background: linear-gradient(135deg, var(--primary), var(--success));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .score-summary .total-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-summary .total-score {
+            font-size: 4rem;
+            font-weight: 700;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .score-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .score-item {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            text-align: center;
+        }
+
+        .score-item-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-item-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Crimson Pro', serif;
+        }
+
+        .next-steps {
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .next-steps h3 {
+            font-family: 'Crimson Pro', serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .next-steps ul {
+            list-style-position: inside;
+            color: var(--text);
+        }
+
+        .next-steps li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #pdfContent, #pdfContent * {
+                visibility: visible;
+            }
+            #pdfContent {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-buttons .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhUQEhIVFRUXFRUXGBYVFxUXGBgYGhUXGBcVGBcYHSggGBolHRgaIjEhJSktLi4uFx8zODMsNygtLisBCgoKDg0OGxAQGy0mHyUtLS0rLS0tLS0rLS0tLS0tLS0tLSstLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABgcBBAUCAwj/xABLEAABAwIDBAcDCgQCBgsAAAABAAIDBAUSMTBDIkFRMREGEyNRcRWD0IgYQmBxgZHB0/EMcpThM4Ogk7IXNCJDcnSys5Sj8eL/YABoBAEADAQEBAAAAAAAAAAAAAAABAAWBQYHBAkREQABAAYCBQcCAAAAAAAAAAABAgQGBQcRAwkhJQkVExRBMWEHEhFRUhcjcXeCsTPw8f/aADAMQAIRAxEAPwC4aIiooiIqiIiEBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEReFsNigIqU20pMPp4hnvS/fWD+IfcUt61XOllvT/qx/pyfirL4OynLQpQ0S7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" alt="Podar Logo" class="logo">
+                    <div class="school-info">
+                        <h1>PODAR INTERNATIONAL SCHOOL</h1>
+                        <p>Interview Drive - January 2026</p>
+                    </div>
+                </div>
+                <div class="timer-display" id="timer" style="display: none;">
+                    ⏱️ <span id="time">30:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+            <div class="login-card">
+                <h1>Verify Your Identity</h1>
+                <p>Enter your token number to access the examination</p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginToken">Token Number</label>
+                        <input type="text" id="loginToken" required placeholder="e.g., PISL001" pattern="PISL\d{3}">
+                    </div>
+                    <button type="submit" class="btn">Verify & Continue</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Exam Page -->
+        <div id="examPage" class="page">
+            <div class="exam-header">
+                <h1 style="font-family: 'Crimson Pro', serif; font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">
+                    Online Aptitude Examination
+                </h1>
+                <div class="candidate-info">
+                    <div class="info-item">
+                        <div class="info-label">Token Number</div>
+                        <div class="info-value" id="candidateToken">---</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Candidate Name</div>
+                        <div class="info-value" id="candidateName">---</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Position</div>
+                        <div class="info-value" id="candidateSubject">---</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Total Questions</div>
+                        <div class="info-value">40 Questions</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Total Marks</div>
+                        <div class="info-value">40 Marks</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Duration</div>
+                        <div class="info-value">30 Minutes</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pdfContent">
+                <!-- Section 1: Basic English -->
+                <div class="section-container" id="section1">
+                    <div class="section-header">
+                        <h2>Section 1: Basic English Knowledge</h2>
+                        <span class="section-badge">10 Questions | 10 Marks</span>
+                    </div>
+                    <div id="basicEnglishQuestions"></div>
+                </div>
+
+                <!-- Section 2: Computer Knowledge -->
+                <div class="section-container" id="section2">
+                    <div class="section-header">
+                        <h2>Section 2: Computer Knowledge</h2>
+                        <span class="section-badge">5 Questions | 5 Marks</span>
+                    </div>
+                    <div id="computerQuestions"></div>
+                </div>
+
+                <!-- Section 3: Classroom Management -->
+                <div class="section-container" id="section3">
+                    <div class="section-header">
+                        <h2>Section 3: Classroom Management</h2>
+                        <span class="section-badge">5 Questions | 5 Marks</span>
+                    </div>
+                    <div id="classroomQuestions"></div>
+                </div>
+
+                <!-- Section 4: Subject Aptitude -->
+                <div class="section-container" id="section4">
+                    <div class="section-header">
+                        <h2 id="subjectSectionTitle">Section 4: Subject Aptitude</h2>
+                        <span class="section-badge">20 Questions | 20 Marks</span>
+                    </div>
+                    <div id="subjectQuestions"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="saveAsPDF()">
+                    📄 Save as PDF
+                </button>
+                <button class="btn btn-success" onclick="submitExam()">
+                    ✅ Submit Examination
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Page -->
+        <div id="resultsPage" class="page">
+            <div class="results-card">
+                <div class="results-header">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎓</div>
+                    <h1>Examination Completed!</h1>
+                    <p style="color: var(--text-light); font-size: 1.1rem;">Your detailed score breakdown</p>
+                </div>
+
+                <div class="score-summary">
+                    <div class="total-label">TOTAL EXAM SCORE</div>
+                    <div class="total-score"><span id="finalTotalScore">0</span> / 40</div>
+                </div>
+
+                <div class="score-breakdown">
+                    <div class="score-item">
+                        <div class="score-item-label">Basic English</div>
+                        <div class="score-item-value"><span id="finalBasicEnglish">0</span>/10</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-item-label">Computer Knowledge</div>
+                        <div class="score-item-value"><span id="finalComputer">0</span>/5</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-item-label">Classroom Management</div>
+                        <div class="score-item-value"><span id="finalClassroom">0</span>/5</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-item-label">Subject Aptitude</div>
+                        <div class="score-item-value"><span id="finalSubject">0</span>/20</div>
+                    </div>
+                </div>
+
+                <div class="candidate-info" style="margin-bottom: 2rem;">
+                    <div class="info-item">
+                        <div class="info-label">Token Number</div>
+                        <div class="info-value" id="finalToken">---</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Candidate Name</div>
+                        <div class="info-value" id="finalName">---</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Position</div>
+                        <div class="info-value" id="finalSubjectName">---</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Time Taken</div>
+                        <div class="info-value" id="finalTime">---</div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>📋 Next Steps</h3>
+                    <ul>
+                        <li>Your scores have been recorded in our system</li>
+                        <li>Please proceed to the <strong>Demo Teaching Hall</strong></li>
+                        <li>The examiner will evaluate your demonstration</li>
+                        <li>After demo, you will have a final interview with the panel</li>
+                        <li><strong>Keep your token number safe</strong> - you'll need it</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 2rem; text-align: center; color: var(--text-light); font-size: 0.95rem;">
+                    Final results will be communicated by the interview panel after complete assessment
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script src="podar-exam-questions.js"></script>
+    <script>
+        let candidateData = {};
+        let examQuestions = {};
+        let answers = {};
+        let timeRemaining = 1800; // 30 minutes
+        let timerInterval = null;
+        let examStartTime = null;
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const tokenNumber = document.getElementById('loginToken').value.toUpperCase();
+            
+            candidateData.tokenNumber = tokenNumber;
+            
+            // Try to get data from localStorage
+            const storedToken = localStorage.getItem('candidateToken');
+            const storedName = localStorage.getItem('candidateName');
+            const storedSubject = localStorage.getItem('candidateSubject');
+            
+            if (storedToken === tokenNumber) {
+                candidateData.name = storedName;
+                candidateData.subject = storedSubject;
+                startExam();
+            } else {
+                alert('Token number not found. Please ensure you have registered first.');
+            }
+        });
+
+        function startExam() {
+            document.getElementById('candidateToken').textContent = candidateData.tokenNumber;
+            document.getElementById('candidateName').textContent = candidateData.name || 'Candidate';
+            document.getElementById('candidateSubject').textContent = candidateData.subject;
+            document.getElementById('subjectSectionTitle').textContent = 'Section 4: ' + candidateData.subject + ' Aptitude';
+            
+            // Generate random exam questions
+            examQuestions = generateExamQuestions(candidateData.subject);
+            
+            // Render all questions
+            renderQuestions('basicEnglishQuestions', examQuestions.basicEnglish, 'basicEnglish');
+            renderQuestions('computerQuestions', examQuestions.computerKnowledge, 'computer');
+            renderQuestions('classroomQuestions', examQuestions.classroomManagement, 'classroom');
+            
+            // Combine subject questions
+            const allSubjectQs = [
+                ...examQuestions.subjectEasy,
+                ...examQuestions.subjectModerate,
+                ...examQuestions.subjectDifficult
+            ];
+            renderQuestions('subjectQuestions', allSubjectQs, 'subject');
+            
+            examStartTime = new Date();
+            document.getElementById('timer').style.display = 'block';
+            startTimer();
+            showPage('examPage');
+        }
+
+        function renderQuestions(containerId, questions, prefix) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-card';
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <label class="option" onclick="selectAnswer('${prefix}', ${index}, ${i})">
+                                <input type="radio" name="${prefix}_${index}" value="${i}">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(section, questionIndex, optionIndex) {
+            const key = `${section}_${questionIndex}`;
+            answers[key] = optionIndex;
+            
+            // Update UI
+            const options = document.querySelectorAll(`input[name="${section}_${questionIndex}"]`).forEach((radio, i) => {
+                radio.parentElement.classList.toggle('selected', i === optionIndex);
+                radio.checked = (i === optionIndex);
+            });
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                const timeStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                document.getElementById('time').textContent = timeStr;
+                
+                if (timeRemaining <= 300) {
+                    document.getElementById('timer').classList.add('warning');
+                }
+                
+                if (timeRemaining <= 0) {
+                    alert('Time is up! The exam will be submitted automatically.');
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function calculateScores() {
+            let basicEnglishScore = 0;
+            let computerScore = 0;
+            let classroomScore = 0;
+            let subjectScore = 0;
+            
+            // Calculate Basic English (10 questions)
+            for (let i = 0; i < examQuestions.basicEnglish.length; i++) {
+                const key = `basicEnglish_${i}`;
+                if (answers[key] === examQuestions.basicEnglish[i].correct) {
+                    basicEnglishScore++;
+                }
+            }
+            
+            // Calculate Computer Knowledge (5 questions)
+            for (let i = 0; i < examQuestions.computerKnowledge.length; i++) {
+                const key = `computer_${i}`;
+                if (answers[key] === examQuestions.computerKnowledge[i].correct) {
+                    computerScore++;
+                }
+            }
+            
+            // Calculate Classroom Management (5 questions)
+            for (let i = 0; i < examQuestions.classroomManagement.length; i++) {
+                const key = `classroom_${i}`;
+                if (answers[key] === examQuestions.classroomManagement[i].correct) {
+                    classroomScore++;
+                }
+            }
+            
+            // Calculate Subject Aptitude (20 questions total)
+            const allSubjectQs = [
+                ...examQuestions.subjectEasy,
+                ...examQuestions.subjectModerate,
+                ...examQuestions.subjectDifficult
+            ];
+            
+            for (let i = 0; i < allSubjectQs.length; i++) {
+                const key = `subject_${i}`;
+                if (answers[key] === allSubjectQs[i].correct) {
+                    subjectScore++;
+                }
+            }
+            
+            return {
+                basicEnglish: basicEnglishScore,
+                computer: computerScore,
+                classroom: classroomScore,
+                subject: subjectScore,
+                total: basicEnglishScore + computerScore + classroomScore + subjectScore
+            };
+        }
+
+        function saveAsPDF() {
+            const element = document.getElementById('pdfContent');
+            const opt = {
+                margin: 10,
+                filename: `Exam_${candidateData.tokenNumber}_${candidateData.name}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        function submitExam() {
+            if (!confirm('Are you sure you want to submit? You cannot change your answers after submission.')) {
+                return;
+            }
+            
+            stopTimer();
+            
+            const scores = calculateScores();
+            const timeTaken = Math.floor((new Date() - examStartTime) / 1000);
+            const timeTakenStr = `${Math.floor(timeTaken / 60)}m ${timeTaken % 60}s`;
+            
+            // Send to Google Sheets
+            const examData = {
+                type: 'exam',
+                tokenNumber: candidateData.tokenNumber,
+                basicEnglishScore: scores.basicEnglish,
+                computerKnowledgeScore: scores.computer,
+                classroomManagementScore: scores.classroom,
+                subjectAptitudeScore: scores.subject,
+                totalExamScore: scores.total
+            };
+            
+            sendToGoogleSheets(examData);
+            
+            // Show results
+            document.getElementById('finalToken').textContent = candidateData.tokenNumber;
+            document.getElementById('finalName').textContent = candidateData.name;
+            document.getElementById('finalSubjectName').textContent = candidateData.subject;
+            document.getElementById('finalTime').textContent = timeTakenStr;
+            document.getElementById('finalBasicEnglish').textContent = scores.basicEnglish;
+            document.getElementById('finalComputer').textContent = scores.computer;
+            document.getElementById('finalClassroom').textContent = scores.classroom;
+            document.getElementById('finalSubject').textContent = scores.subject;
+            document.getElementById('finalTotalScore').textContent = scores.total;
+            
+            showPage('resultsPage');
+        }
+
+        function sendToGoogleSheets(data) {
+            const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                console.log('Exam data sent to Google Sheets');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('beforeunload', function(e) {
+            if (document.getElementById('examPage').classList.contains('active')) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+</body>
+</html>
