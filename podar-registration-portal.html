@@ -44,7 +44,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -76,8 +76,6 @@
 
         main {
             flex: 1;
-            display: flex;
-            align-items: center;
             padding: 2rem 0;
         }
 
@@ -113,7 +111,23 @@
             font-size: 0.95rem;
         }
 
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
         .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
@@ -128,7 +142,7 @@
             color: #dc2626;
         }
 
-        input, select {
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
             width: 100%;
             padding: 0.875rem;
             border: 2px solid var(--border);
@@ -138,9 +152,44 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.75rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item.checked {
+            border-color: var(--primary);
+            background: #e8f5e9;
         }
 
         .btn {
@@ -181,6 +230,10 @@
             .registration-card h1 {
                 font-size: 1.5rem;
             }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -188,7 +241,7 @@
     <header>
         <div class="container">
             <div class="logo-section">
-                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhUQEhIVFRUXFRUXGBYVFxUXGBgYGhUXGBcVGBcYHSggGBolHRgaIjEhJSktLi4uFx8zODMsNygtLisBCgoKDg0OGxAQGy0mHyUtLS0rLS0tLS0rLS0tLS0tLS0tLSstLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABgcBBAUCAwj/xABLEAABAwIDBAcDCgQCBgsAAAABAAIDBAESMTBEIkFhMREGEiNRcRYD0IgYQmBxgZHB0/EMcpPhM4Ogk7IXNCRDcnSys5Sj8eL/xABoBAEADAQEBAAAAAAAAAAAAAAABAAWBQYHCAcHBQkREQABAAYCBQcCAAAAAAAAAAABAgQGBQcRAwghJQkVExRBMWEHEhFRUhcjcXeCsTPw8f/aADAMQAIRAxEAPwC4aIiooiIqiIiEBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEReFsNigIqU20pMPp4hnvS/fWD+IfcUt61XOllvT/qx/pyfirL4OynLQpQ0S7pzEOjWrI1VJhFEBwc2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" alt="Podar International School Logo" class="logo">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxASEhUQEhIVFRUXFRUXGBYVFxUXGBgYGhUXGBcVGBcYHSggGBolHRgaIjEhJSktLi4uFx8zODMsNygtLisBCgoKDg0OGxAQGy0mHyUtLS0rLS0tLS0rLS0tLS0tLS0tLSstLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABgcBBAUCAwj/xABLEAABAwIDBAcDCgQCBgsAAAABAAIDBAUSMTBDIkFRMREGEyNRcRWD0IgYQmBxgZHB0/EMcpThM4Ogk7IXNCJDcnSys5Sj8eL/YABoBAEADAQEBAAAAAAAAAAAAAAABAAWBQYHBAkREQABAAYCBQcCAAAAAAAAAAABAgQGBQcRAwkhJQkVExRBMWEHEhFRUhcjcXeCsTPw8f/aADAMQAIRAxEAPwC4aIiooiIqiIiEBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREARE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" alt="Podar International School Logo" class="logo">
                 <div class="school-name">PODAR INTERNATIONAL SCHOOL</div>
                 <div class="event-name">Interview Drive - January 2026</div>
             </div>
@@ -198,36 +251,188 @@
     <main class="container">
         <div class="registration-card">
             <h1>Candidate Registration</h1>
-            <p>Please fill in your details to proceed with the recruitment process</p>
+            <p>Please fill in your complete details to proceed with the recruitment process</p>
 
             <div class="info-box">
                 ℹ️ After registration, you will receive a unique token number. <strong>Write it on paper and take a screenshot.</strong>
             </div>
 
             <form id="registrationForm">
+                <!-- Personal Information -->
+                <div class="section-title">📋 Personal Information</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidateName">Name of the Candidate <span class="required">*</span></label>
+                        <input type="text" id="candidateName" required placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="candidateEmail">Email Address <span class="required">*</span></label>
+                        <input type="email" id="candidateEmail" required placeholder="your.email@example.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidatePhone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="candidatePhone" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                    </div>
+                </div>
+
+                <!-- Educational Qualification -->
+                <div class="section-title">🎓 Educational Qualification</div>
+
                 <div class="form-group">
-                    <label for="candidateName">Full Name <span class="required">*</span></label>
-                    <input type="text" id="candidateName" required placeholder="Enter your full name">
+                    <label>Educational Qualification <span class="required">*</span></label>
+                    <div class="checkbox-group" id="educationQualification">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="B.Sc">
+                            <span>B.Sc</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="B.A.">
+                            <span>B.A.</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="B.Com">
+                            <span>B.Com</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="M.Sc">
+                            <span>M.Sc</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="M.A.">
+                            <span>M.A.</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="M.Com">
+                            <span>M.Com</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="B.E.">
+                            <span>B.E.</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="B.Tech">
+                            <span>B.Tech</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="M.E.">
+                            <span>M.E.</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="M.Tech">
+                            <span>M.Tech</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="education" value="Other">
+                            <span>Other</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="candidateEmail">Email Address <span class="required">*</span></label>
-                    <input type="email" id="candidateEmail" required placeholder="your.email@example.com">
+                    <label>Subjects in Graduation <span class="required">*</span></label>
+                    <div class="checkbox-group" id="graduationSubjects">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="English">
+                            <span>English</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Hindi">
+                            <span>Hindi</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Mathematics">
+                            <span>Mathematics</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Science">
+                            <span>Science</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Physics">
+                            <span>Physics</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Chemistry">
+                            <span>Chemistry</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Biology">
+                            <span>Biology</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Social Science">
+                            <span>Social Science</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Computer">
+                            <span>Computer</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="gradSubject" value="Other">
+                            <span>Other</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="candidatePhone">Phone Number <span class="required">*</span></label>
-                    <input type="tel" id="candidatePhone" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professionalQualification">Professional Qualification <span class="required">*</span></label>
+                        <select id="professionalQualification" required>
+                            <option value="">-- Select --</option>
+                            <option value="D.Ed">D.Ed</option>
+                            <option value="B.Ed">B.Ed</option>
+                            <option value="M.Ed">M.Ed</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teachingExperience">Teaching Experience (In years) <span class="required">*</span></label>
+                        <select id="teachingExperience" required>
+                            <option value="">-- Select --</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="More than 7">More than 7</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="candidateQualification">Highest Qualification <span class="required">*</span></label>
-                    <input type="text" id="candidateQualification" required placeholder="e.g., B.Ed, M.Ed, B.Sc, M.A">
-                </div>
+                <!-- Employment Details -->
+                <div class="section-title">💼 Employment Details</div>
 
                 <div class="form-group">
-                    <label for="candidateSubject">Position Applying For <span class="required">*</span></label>
-                    <select id="candidateSubject" required>
+                    <label for="currentOrganization">Currently Working With (Organization/Institute/School)</label>
+                    <input type="text" id="currentOrganization" placeholder="Enter current organization name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="currentSalary">Current Salary (Per Month)</label>
+                        <input type="number" id="currentSalary" placeholder="Enter amount in ₹">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expectedSalary">Expected Salary (Per Month)</label>
+                        <input type="number" id="expectedSalary" placeholder="Enter expected amount in ₹">
+                    </div>
+                </div>
+
+                <!-- Post Applied -->
+                <div class="section-title">📌 Position & Location</div>
+
+                <div class="form-group">
+                    <label for="postApplied">Post Applied For <span class="required">*</span></label>
+                    <select id="postApplied" required>
                         <option value="">-- Select Position --</option>
                         <optgroup label="PRT Level (Primary Teacher)">
                             <option value="PRT English">PRT English</option>
@@ -249,7 +454,39 @@
                             <option value="TGT Marathi">TGT Marathi</option>
                             <option value="TGT Hindi">TGT Hindi</option>
                         </optgroup>
+                        <optgroup label="Other Positions">
+                            <option value="Pre Primary">Pre Primary</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Art">Art</option>
+                            <option value="Music">Music</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Library">Library</option>
+                            <option value="Accountant">Accountant</option>
+                            <option value="Other">Other</option>
+                        </optgroup>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Location Preference <span class="required">*</span></label>
+                    <div class="checkbox-group" id="locationPreference">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="location" value="Dharashiv">
+                            <span>Dharashiv</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="location" value="Ausa">
+                            <span>Ausa</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="location" value="Latur Katpur">
+                            <span>Latur Katpur</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="location" value="Latur Khadgaon">
+                            <span>Latur Khadgaon</span>
+                        </label>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn" id="submitBtn">Complete Registration</button>
@@ -258,6 +495,17 @@
     </main>
 
     <script>
+        // Checkbox highlighting
+        document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    this.closest('.checkbox-item').classList.add('checked');
+                } else {
+                    this.closest('.checkbox-item').classList.remove('checked');
+                }
+            });
+        });
+
         function generateTokenNumber() {
             const timestamp = Date.now();
             const random = Math.floor(Math.random() * 1000);
@@ -265,16 +513,57 @@
             return 'PISL' + tokenNum.toString().padStart(3, '0');
         }
 
+        function getCheckedValues(name) {
+            const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
+            return Array.from(checked).map(cb => cb.value).join(', ');
+        }
+
+        function getTestLevel(post) {
+            if (post.startsWith('PRT')) return 'PRT';
+            if (post.startsWith('TGT')) return 'TGT';
+            return 'Non-Teaching';
+        }
+
+        function isSubjectTeacher(post) {
+            return post.startsWith('PRT') || post.startsWith('TGT');
+        }
+
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Validate at least one checkbox is selected for each group
+            const education = getCheckedValues('education');
+            const gradSubjects = getCheckedValues('gradSubject');
+            const locations = getCheckedValues('location');
+
+            if (!education) {
+                alert('Please select at least one Educational Qualification');
+                return;
+            }
+
+            if (!gradSubjects) {
+                alert('Please select at least one Graduation Subject');
+                return;
+            }
+
+            if (!locations) {
+                alert('Please select at least one Location Preference');
+                return;
+            }
 
             const name = document.getElementById('candidateName').value;
             const email = document.getElementById('candidateEmail').value;
             const phone = document.getElementById('candidatePhone').value;
-            const qualification = document.getElementById('candidateQualification').value;
-            const subject = document.getElementById('candidateSubject').value;
+            const professionalQualification = document.getElementById('professionalQualification').value;
+            const teachingExperience = document.getElementById('teachingExperience').value;
+            const currentOrganization = document.getElementById('currentOrganization').value;
+            const currentSalary = document.getElementById('currentSalary').value;
+            const expectedSalary = document.getElementById('expectedSalary').value;
+            const postApplied = document.getElementById('postApplied').value;
 
             const tokenNumber = generateTokenNumber();
+            const testLevel = getTestLevel(postApplied);
+            const requiresExam = isSubjectTeacher(postApplied);
 
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
@@ -286,29 +575,30 @@
                 name: name,
                 email: email,
                 phone: phone,
-                qualification: qualification,
-                subject: subject,
-                testLevel: subject.split(' ')[0],
-                basicEnglishScore: '',
-                computerKnowledgeScore: '',
-                classroomManagementScore: '',
-                subjectAptitudeScore: '',
-                totalExamScore: '',
-                languageQuality: '',
-                subjectContent: '',
-                presentation: '',
-                confidence: '',
-                totalDemoScore: '',
-                demoRemarks: '',
-                grandTotal: '',
-                finalDecision: ''
+                educationalQualification: education,
+                graduationSubjects: gradSubjects,
+                professionalQualification: professionalQualification,
+                teachingExperience: teachingExperience,
+                currentOrganization: currentOrganization,
+                currentSalary: currentSalary,
+                expectedSalary: expectedSalary,
+                postApplied: postApplied,
+                locationPreference: locations,
+                testLevel: testLevel,
+                requiresExam: requiresExam
             };
+
+            // Store for exam portal
+            localStorage.setItem('candidateToken', tokenNumber);
+            localStorage.setItem('candidateName', name);
+            localStorage.setItem('candidatePost', postApplied);
+            localStorage.setItem('requiresExam', requiresExam);
 
             sendToGoogleSheets(registrationData);
         });
 
         function sendToGoogleSheets(data) {
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKqeubkazHovXKw53_2tvz037kAwMmwsUykrrHSS58ERnePqRB4tWabHc373Aq4B0/exec';
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWSJaUyssgyT9ex6jXEpAjzj5i3_Dn22LskSbn3LGIAkMhHg4k9kYfwCjzQnVEbWp6VQ/exec';
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -320,22 +610,31 @@
             })
             .then(() => {
                 console.log('Registration data sent successfully');
-                showSuccessPage(data.tokenNumber, data.name, data.subject);
+                showSuccessPage(data.tokenNumber, data.name, data.postApplied, data.requiresExam);
             })
             .catch(error => {
                 console.error('Error:', error);
-                showSuccessPage(data.tokenNumber, data.name, data.subject);
+                showSuccessPage(data.tokenNumber, data.name, data.postApplied, data.requiresExam);
             });
         }
 
-        function showSuccessPage(token, name, subject) {
-            localStorage.setItem('candidateToken', token);
-            localStorage.setItem('candidateName', name);
-            localStorage.setItem('candidateSubject', subject);
-
+        function showSuccessPage(token, name, post, requiresExam) {
             document.getElementById('registrationForm').style.display = 'none';
             document.querySelector('.info-box').style.display = 'none';
             
+            const nextSteps = requiresExam 
+                ? `
+                    <li>Keep paper and phone with you</li>
+                    <li>Proceed to the <strong>Online Exam Hall</strong></li>
+                    <li>After exam, go to <strong>Demo Teaching Hall</strong></li>
+                    <li>Final interview with panel</li>
+                `
+                : `
+                    <li>Keep paper and phone with you</li>
+                    <li>Proceed directly to <strong>Interview Room</strong></li>
+                    <li>Present your token number when called</li>
+                `;
+
             const successHTML = `
                 <div style="text-align: center; padding: 2rem 0;">
                     <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
@@ -350,6 +649,9 @@
                         </div>
                         <div style="font-size: 1rem; opacity: 0.95;">
                             Candidate: ${name}
+                        </div>
+                        <div style="font-size: 1rem; opacity: 0.95;">
+                            Position: ${post}
                         </div>
                     </div>
 
@@ -383,12 +685,6 @@
                                 </li>
                             </ul>
                         </div>
-                        
-                        <div style="background: #fef3c7; padding: 1rem; border-radius: 6px; border-left: 4px solid #f59e0b;">
-                            <p style="margin: 0; color: #92400e; font-weight: 600;">
-                                🔒 You will need this code for the <strong>Online Exam Hall</strong> and <strong>Demo Examination</strong>
-                            </p>
-                        </div>
                     </div>
 
                     <div style="background: var(--accent-light); border-left: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; text-align: left;">
@@ -396,27 +692,8 @@
                         <ol style="margin-left: 1rem; font-size: 1.05rem;">
                             <li style="margin-bottom: 0.75rem;"><strong>Write your token number on paper</strong> (MANDATORY)</li>
                             <li style="margin-bottom: 0.75rem;">Take a screenshot for backup</li>
-                            <li style="margin-bottom: 0.75rem;">Keep both paper and phone with you</li>
-                            <li style="margin-bottom: 0.75rem;">Proceed to the Online Exam Hall</li>
-                            <li>Present your token number when asked</li>
+                            ${nextSteps}
                         </ol>
-                    </div>
-
-                    <button class="btn" onclick="window.print()" style="background: var(--accent); color: var(--primary-dark); margin-bottom: 1rem;">
-                        🖨️ Print This Page (Alternative)
-                    </button>
-
-                    <div style="margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; border: 2px dashed var(--primary);">
-                        <h4 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1.1rem;">✏️ Write Your Code Here:</h4>
-                        <div style="background: white; padding: 1.5rem; border: 2px solid var(--border); border-radius: 8px; text-align: center;">
-                            <p style="margin-bottom: 0.5rem; color: var(--text-light); font-size: 0.9rem;">MY TOKEN NUMBER</p>
-                            <p style="font-size: 2.5rem; font-weight: 700; letter-spacing: 8px; color: var(--primary); font-family: 'Courier New', monospace; margin: 0;">
-                                ${token}
-                            </p>
-                        </div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); text-align: center;">
-                            Show this on screen or write it down on paper before proceeding
-                        </p>
                     </div>
                 </div>
             `;
