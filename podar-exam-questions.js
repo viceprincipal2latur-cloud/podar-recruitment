@@ -34,16 +34,16 @@ const basicEnglishDatabase = [
 // SECTION 2: COMPUTER KNOWLEDGE
 // Database: 10 questions, Exam selects: 5 random
 const computerKnowledgeDatabase = [
-    { question: "What does CPU stand for?", options: ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit", "Central Processor Unit"], correct: 1 },
-    { question: "What is the brain of the computer?", options: ["Monitor", "CPU", "Keyboard", "Mouse"], correct: 1 },
-    { question: "What does RAM stand for?", options: ["Random Access Memory", "Read Access Memory", "Random Available Memory", "Read Available Memory"], correct: 0 },
-    { question: "Which is an input device?", options: ["Monitor", "Printer", "Keyboard", "Speaker"], correct: 2 },
-    { question: "What is software?", options: ["Physical parts", "Programs", "Monitor", "Keyboard"], correct: 1 },
-    { question: "What does WWW stand for?", options: ["World Wide Web", "World Web Wide", "Web World Wide", "Wide World Web"], correct: 0 },
-    { question: "Which is an output device?", options: ["Mouse", "Scanner", "Monitor", "Microphone"], correct: 2 },
-    { question: "What is an operating system?", options: ["Hardware", "System software", "Application", "Network"], correct: 1 },
-    { question: "What does URL stand for?", options: ["Uniform Resource Locator", "Universal Resource Locator", "Uniform Reference Locator", "Universal Reference Locator"], correct: 0 },
-    { question: "What is a byte?", options: ["1 bit", "4 bits", "8 bits", "16 bits"], correct: 2 }
+    { question: "Which device is used to input data into a computer?", options: ["Monitor", "Printer", "Keyboard", "Speaker"], correct: 2 },
+    { question: "What does CPU stand for?", options: ["Central Processing Unit", "Computer Power Unit", "Central Program Utility", "Control Processing Unit"], correct: 0 },
+    { question: "Which software is used for typing letters and documents?", options: ["MS Excel", "MS Word", "MS PowerPoint", "Paint"], correct: 1 },
+    { question: "Which feature in MS Word is used to make text bold, italic or underline?", options: ["Font formatting", "Page layout", "Spell check", "Mail merge"], correct: 0 },
+    { question: "What is a file created in MS Word called?", options: ["Workbook", "Presentation", "Document", "Sheet"], correct: 2 },
+    { question: "MS Excel is mainly used for:", options: ["Drawing pictures", "Making presentations", "Performing calculations", "Typing letters"], correct: 2 },
+    { question: "What is a worksheet in MS Excel?", options: ["A single page in Excel", "A complete Excel file", "A PowerPoint slide", "A Word document"], correct: 0 },
+    { question: "Which symbol is used to start a formula in MS Excel?", options: ["+", "-", "=", "*"], correct: 2 },
+    { question: "MS PowerPoint is used to:", options: ["Prepare reports", "Create spreadsheets", "Make presentations", "Edit images"], correct: 2 },
+    { question: "Each page in a PowerPoint presentation is called a:", options: ["Document", "Sheet", "Slide", "Page"], correct: 2 }
 ];
 
 // SECTION 3: CLASSROOM MANAGEMENT
